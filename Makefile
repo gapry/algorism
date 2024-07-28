@@ -1,6 +1,6 @@
 app         = algorism
 test        = test_$(app)
-cxx         = clang++-18
+cxx         = clang++
 src_library = algorism
 src_test    = test
 src         = $(src_library) $(src_test)
