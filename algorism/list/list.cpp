@@ -1,3 +1,6 @@
+// Copyright (c) gapry.
+// Licensed under the MIT license.
+
 module;
 
 #include <algorism/platform/inline.hpp>

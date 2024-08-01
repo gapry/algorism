@@ -1,3 +1,6 @@
+// Copyright (c) gapry.
+// Licensed under the MIT license.
+
 #pragma once
 
 #if defined(_MSC_VER)

@@ -1,3 +1,6 @@
+// Copyright (c) gapry.
+// Licensed under the MIT license.
+
 #include <gtest/gtest.h>
 
 import algorism.list;

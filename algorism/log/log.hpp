@@ -1,3 +1,6 @@
+// Copyright (c) gapry.
+// Licensed under the MIT license.
+
 #pragma once
 
 #include <algorism/platform/inline.hpp>

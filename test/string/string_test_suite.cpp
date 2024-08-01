@@ -1,3 +1,6 @@
+// Copyright (c) gapry.
+// Licensed under the MIT license.
+
 #include <algorism/log/log.hpp>
 #include <gtest/gtest.h>
 #include <string>
