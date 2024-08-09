@@ -1,3 +1,7 @@
+# Copyright (c) 2024 Gapry.
+# Licensed under the MIT License.
+# See LICENSE file in the project root for full license information.
+
 cmake_minimum_required(VERSION 3.30)
 
 set(project_name                  "algorism")
@@ -35,7 +39,7 @@ target_compile_features(lib_${project_name}
 )
 
 target_compile_options(lib_${project_name} 
-  PRIVATE -g -O0
+  PRIVATE -g -O0 
 )
 
 target_link_libraries(lib_${project_name} 
@@ -46,7 +50,7 @@ IF(BUILD_TEST)
   add_executable(test_${project_name}.out ${src_test})
 
   target_compile_options(test_${project_name}.out
-    PRIVATE -g -O0
+    PRIVATE -g -O0 -fsanitize=address
   )
 
   target_link_libraries(test_${project_name}.out
@@ -55,5 +59,6 @@ IF(BUILD_TEST)
             GTest::gtest_main 
             GTest::gmock 
             GTest::gmock_main
+            -fsanitize=address
   )
 ENDIF(BUILD_TEST)
