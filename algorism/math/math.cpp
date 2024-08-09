@@ -4,19 +4,13 @@
 
 #include <algorism/platform/inline.hpp>
 
-export module algorism.list;
+export module algorism.math;
 
 namespace algorism {
 
 export template<typename T>
-class list {
-public:
-  T size(const T n) const;
-};
-
-template<typename T>
-ALGORISM_INLINE T list<T>::size(const T n) const {
-  return n;
+ALGORISM_INLINE T max(const T& a, const T& b) {
+  return (a < b) ? b : a;
 }
 
 } // namespace algorism

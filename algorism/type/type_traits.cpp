@@ -1,5 +1,6 @@
-// Copyright (c) gapry.
-// Licensed under the MIT license.
+// Copyright (c) 2024 Gapry.
+// Licensed under the MIT License.
+// See LICENSE file in the project root for full license information.
 
 export module algorism.type_traits;
 
@@ -79,5 +80,25 @@ export template<typename T>
 struct is_same<T, T> {
   static const bool value = true;
 };
+
+export template<typename T>
+struct remove_reference {
+  using type = T;
+};
+
+export template<typename T>
+struct remove_reference<T&> {
+  using type = T;
+};
+
+export template<typename T>
+struct remove_reference<T&&> {
+  using type = T;
+};
+
+export template<typename T>
+typename remove_reference<T>::type&& move(T&& arg) noexcept {
+  return static_cast<typename remove_reference<T>::type&&>(arg);
+}
 
 } // namespace algorism
