@@ -13,3 +13,4 @@ fi
 
 $dir_vcpkg/vcpkg install fmt
 $dir_vcpkg/vcpkg install gtest
+$dir_vcpkg/vcpkg install benchmark
