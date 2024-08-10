@@ -10,15 +10,51 @@ namespace algorism {
 
 export template<typename T>
 class string_allocator : public default_allocator {
+  struct Node {
+    T*    data;
+    Node* next;
+
+    Node(T* data, Node* next = nullptr)
+      : data(data)
+      , next(next) {
+    }
+  };
+
+  Node*                                 head;
+  Node*                                 tail;
+  typename default_allocator::size_type node_capacity;
+
 public:
   using super = default_allocator;
 
+  string_allocator()
+    : head(nullptr)
+    , tail(nullptr)
+    , node_capacity(32) {
+  }
+
+  ~string_allocator() {
+    Node* current = head;
+    while (current) {
+      Node* next = current->next;
+      super::deallocate(current->data, node_capacity);
+      delete current;
+      current = next;
+    }
+  }
+
   T* allocate(super::size_type n) {
-    return static_cast<T*>(super::allocate(n * sizeof(T)));
+    if (!head) {
+      head = tail = new Node(static_cast<T*>(super::allocate(n * sizeof(T))));
+    } else {
+      Node* new_node = new Node(static_cast<T*>(super::allocate(n * sizeof(T))));
+      tail->next     = new_node;
+      tail           = new_node;
+    }
+    return tail->data;
   }
 
   void deallocate(T* p, super::size_type n) {
-    super::deallocate(p, n * sizeof(T));
   }
 
   void construct(T* p, const T& value) {
