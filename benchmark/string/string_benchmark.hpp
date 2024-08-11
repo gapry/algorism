@@ -4,22 +4,54 @@
 
 #pragma once
 
+#define algorism_StringAppendCStr(T)                        \
+  void BM_##T##_StringAppendCStr(benchmark::State& state) { \
+    const char* const s1 = "Hi Hi! ";                       \
+    const char* const s2 = "I go to school by bus!";        \
+    T::string         bench_str(s1);                        \
+    for (auto _ : state) {                                  \
+      bench_str += s2;                                      \
+    }                                                       \
+  }                                                         \
+  BENCHMARK(BM_##T##_StringAppendCStr)->Iterations(1024);   \
+  // --------
+
+#define algorism_StringAppendRef(T)                        \
+  void BM_##T##_StringAppendRef(benchmark::State& state) { \
+    const char* const s1 = "Hi Hi! ";                      \
+    const char* const s2 = "I go to school by bus!";       \
+    T::string         bench_str1(s1);                      \
+    T::string         bench_str2(s2);                      \
+    for (auto _ : state) {                                 \
+      bench_str1 += bench_str2;                            \
+    }                                                      \
+  }                                                        \
+  BENCHMARK(BM_##T##_StringAppendRef)->Iterations(1024);   \
+  // --------
+
+#define algorism_StringAppendMove(T)                        \
+  void BM_##T##_StringAppendMove(benchmark::State& state) { \
+    const char* const s1 = "Hi Hi! ";                       \
+    const char* const s2 = "I go to school by bus!";        \
+    T::string         bench_str(s1);                        \
+    for (auto _ : state) {                                  \
+      bench_str += T::move(T::string(s2));                  \
+    }                                                       \
+  }                                                         \
+  BENCHMARK(BM_##T##_StringAppendMove)->Iterations(1024);   \
+  // --------
+
 #include <benchmark/benchmark.h>
+#include <string>
 
-void BM_Algorism_StringAppendCStr(benchmark::State& state);
-BENCHMARK(BM_Algorism_StringAppendCStr)->Iterations(1024);
+import algorism.string;
+import algorism.type_traits;
 
-void BM_STD_StringAppendCStr(benchmark::State& state);
-BENCHMARK(BM_STD_StringAppendCStr)->Iterations(1024);
+algorism_StringAppendCStr(algorism);
+algorism_StringAppendCStr(std);
 
-void BM_Algorism_StringAppendRef(benchmark::State& state);
-BENCHMARK(BM_Algorism_StringAppendRef)->Iterations(1024);
+algorism_StringAppendRef(algorism);
+algorism_StringAppendRef(std);
 
-void BM_STD_StringAppendRef(benchmark::State& state);
-BENCHMARK(BM_STD_StringAppendRef)->Iterations(1024);
-
-void BM_Algorism_StringAppendMove(benchmark::State& state);
-BENCHMARK(BM_Algorism_StringAppendMove)->Iterations(1024);
-
-void BM_STD_StringAppendMove(benchmark::State& state);
-BENCHMARK(BM_STD_StringAppendMove)->Iterations(1024);
+algorism_StringAppendMove(algorism);
+algorism_StringAppendMove(std);
